@@ -20,3 +20,5 @@ Route::post('/albuns/store', 'AlbunsController@store');
 
 Route::get('/fotos/create/{id}', 'FotosController@create');
 Route::post('/fotos/store', 'FotosController@store');
+Route::get('/fotos/{id}', 'FotosController@show');
+Route::delete('/fotos/{id}', 'FotosController@destroy');

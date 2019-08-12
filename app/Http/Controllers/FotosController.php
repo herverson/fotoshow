@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Foto;
 
 class FotosController extends Controller
@@ -40,5 +41,23 @@ class FotosController extends Controller
       $foto->save();
 
       return redirect('/albuns/'.$request->input('album_id'))->with('success', 'Foto Criada');
+    }
+
+    public function show($id)
+    {
+      $foto = Foto::find($id);
+      return view('fotos.show')->with('foto', $foto);
+    }
+
+    public function destroy($id)
+    {
+      $foto = Foto::find($id);
+
+      if (Storage::delete('public/fotos/'.$foto->album_id.'/'.$foto->foto))
+      {
+        $foto->delete();
+
+        return redirect('/')->with('success', 'Foto excluída');
+      }
     }
 }
